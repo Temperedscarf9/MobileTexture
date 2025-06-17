@@ -1,6 +1,6 @@
 class Color:
     """
-    一个简单的颜色类来模仿System.Drawing.Color.
+    一个简单的颜色类.
     假设 ARGB.
     """
     def __init__(self, a, r, g, b):
