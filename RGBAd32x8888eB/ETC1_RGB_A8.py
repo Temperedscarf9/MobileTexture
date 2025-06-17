@@ -165,13 +165,14 @@ def compress_png_to_etc1_rgb_a8(input_png_path, output_ptx_path):
 
 # 编码示例：
 # if __name__ == "__main__":
-#     compress_png_to_etc1_rgb_a8("/content/ZOMBIEBEACHZOMBOSSGROUP_768.png", "output.ptx")
+#     compress_png_to_etc1_rgb_a8("/content/***.png", "output.ptx")
 
 # 解码示例：
-ptx_path = '/content/DELAYLOAD_BACKGROUND_FRONTLAWN_SUMMERNIGHTS_768_00.PTX'
-output_path = 'DELAYLOAD_BACKGROUND_FRONTLAWN_SUMMERNIGHTS_768.png'
-width  = 1024      # 2048
-height = 2048      # 4096  # 你需要确认宽高！
-image = read_etc1_rgb_a8(ptx_path, width, height)
-image.save(output_path)
-print(f"PTX 转换完成，保存为：{output_path}")
+if __name__ == "__main__":
+    ptx_path = '/content/DELAYLOAD_BACKGROUND_FRONTLAWN_SUMMERNIGHTS_768_00.PTX'
+    output_path = 'DELAYLOAD_BACKGROUND_FRONTLAWN_SUMMERNIGHTS_768.png'
+    width  = 1024      # 2048
+    height = 2048      # 4096  # 你需要确认宽高！
+    image = read_etc1_rgb_a8(ptx_path, width, height)
+    image.save(output_path)
+    print(f"PTX 转换完成，保存为：{output_path}")
