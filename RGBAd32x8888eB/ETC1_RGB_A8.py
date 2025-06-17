@@ -93,4 +93,5 @@ def compress_png_to_etc1_rgb_a8(input_png_path, output_ptx_path):
 # Make sure you have a PNG file at this path or replace it with one that exists.
 # This assumes you're running this in an environment like Google Colab where /content/
 # is a common path for uploaded files.
-compress_png_to_etc1_rgb_a8("/content/ZOMBIEBEACHZOMBOSSGROUP_768.png", "output222.ptx")
+if __name__ == "__main__":
+    compress_png_to_etc1_rgb_a8("/content/ZOMBIEBEACHZOMBOSSGROUP_768.png", "output.ptx")
