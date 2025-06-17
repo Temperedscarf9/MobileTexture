@@ -3,13 +3,13 @@ import struct
 
 class ARGB8888:
     @staticmethod
-    def read(file_path, width, height,block=4):
+    def read(file_path, width, height):
         with open(file_path, 'rb') as f:
-            data = f.read(width * height * block)
+            data = f.read(width * height * 4)
 
         pixels = []
-        for i in range(0, len(data), block):
-            temp = struct.unpack('<I', data[i:i+block])[0]
+        for i in range(0, len(data), 4):
+            temp = struct.unpack('<I', data[i:i+4])[0]
             a = (temp >> 24) & 0xFF
             r = (temp >> 16) & 0xFF
             g = (temp >> 8) & 0xFF
