@@ -47,7 +47,7 @@ def read_etc1_rgb_a8(file_path, width, height):
                             color_obj = decoded_pixels_etc1[i * 4 + j]
                             # Store R, G, B, and a placeholder alpha (0) for now.
                             # The actual alpha will be read in the next step.
-                            img_data[y][x] = (color_obj.R, color_obj.G, color_obj.B, 0)
+                            img_data[y][x] = (color_obj.Red, color_obj.Green, color_obj.Blue, 0)
         
         # --- Read Alpha (A8) data ---
         for y in range(height):
