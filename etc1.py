@@ -4,10 +4,10 @@ class Color:
     假设 ARGB.
     """
     def __init__(self, a, r, g, b):
-        self.A = a
-        self.R = r
-        self.G = g
-        self.B = b
+        self.Alpha = a
+        self.Red = r
+        self.Green = g
+        self.Blue = b
 
     @classmethod
     def from_argb(cls, argb_int):
@@ -18,7 +18,7 @@ class Color:
         return cls(a, r, g, b)
 
     def to_argb(self):
-        return (self.A << 24) | (self.R << 16) | (self.G << 8) | self.B
+        return (self.Alpha << 24) | (self.Red << 16) | (self.Green << 8) | self.Blue
 
     @property
     def White(self):
@@ -29,7 +29,7 @@ class Color:
         return Color(255, 0, 0, 0)
 
     def __repr__(self):
-        return f"Color(A={self.A}, R={self.R}, G={self.G}, B={self.B})"
+        return f"Color(Alpha={self.Alpha}, Red={self.Red}, Green={self.Green}, Blue={self.Blue})"
 
 class ETC1:
     ETC1Modifiers = [	
@@ -51,9 +51,9 @@ class ETC1:
         max_y = float('-inf')
 
         for pixel in pixels:
-            if pixel.A == 0:
+            if pixel.Alpha == 0:
                 continue
-            y = (pixel.R + pixel.G + pixel.B) // 3
+            y = (pixel.Red + pixel.Green + pixel.Blue) // 3
             if y > max_y:
                 max_y = y
                 max_color = pixel
@@ -61,7 +61,7 @@ class ETC1:
                 min_y = y
                 min_color = pixel
 
-        diff_mean = ((max_color.R - min_color.R) + (max_color.G - min_color.G) + (max_color.B - min_color.B)) // 3
+        diff_mean = ((max_color.Red - min_color.Red) + (max_color.Green - min_color.Green) + (max_color.Blue - min_color.Blue)) // 3
 
         mod_diff = float('inf')
         modifier = -1
@@ -93,14 +93,14 @@ class ETC1:
             div1 = float(ETC1.ETC1Modifiers[modifier][0]) / float(ETC1.ETC1Modifiers[modifier][1])
             div2 = 1.0 - div1
             base_color = Color(255, 
-                               int(min_color.R * div1 + max_color.R * div2), 
-                               int(min_color.G * div1 + max_color.G * div2), 
-                               int(min_color.B * div1 + max_color.B * div2))
+                               int(min_color.Red * div1 + max_color.Red * div2), 
+                               int(min_color.Green * div1 + max_color.Green * div2), 
+                               int(min_color.Blue * div1 + max_color.Blue * div2))
         else:
             base_color = Color(255, 
-                               (min_color.R + max_color.R) // 2, 
-                               (min_color.G + max_color.G) // 2, 
-                               (min_color.B + max_color.B) // 2)
+                               (min_color.Red + max_color.Red) // 2, 
+                               (min_color.Green + max_color.Green) // 2, 
+                               (min_color.Blue + max_color.Blue) // 2)
         
         return base_color, modifier
 
@@ -148,9 +148,9 @@ class ETC1:
     def _get_score(original, encode):
         diff = 0
         for i in range(4 * 4):
-            diff += abs(encode[i].R - original[i].R)
-            diff += abs(encode[i].G - original[i].G)
-            diff += abs(encode[i].B - original[i].B)
+            diff += abs(encode[i].Red - original[i].Red)
+            diff += abs(encode[i].Green - original[i].Green)
+            diff += abs(encode[i].Blue - original[i].Blue)
         return diff
 
     @staticmethod
@@ -165,11 +165,11 @@ class ETC1:
 
     @staticmethod
     def _gen_pix_diff(data, pixels, base_color, modifier, x_offs, x_end, y_offs, y_end):
-        base_mean = (base_color.R + base_color.G + base_color.B) // 3
+        base_mean = (base_color.Red + base_color.Green + base_color.Blue) // 3
         i = 0
         for yy in range(y_offs, y_end):
             for xx in range(x_offs, x_end):
-                diff = ((pixels[i].R + pixels[i].G + pixels[i].B) // 3) - base_mean
+                diff = ((pixels[i].Red + pixels[i].Green + pixels[i].Blue) // 3) - base_mean
 
                 if diff < 0:
                     data |= (1 << (xx * 4 + yy + 16))
@@ -240,12 +240,12 @@ class ETC1:
 
     @staticmethod
     def _set_base_colors(data, color1, color2):
-        r1 = color1.R
-        g1 = color1.G
-        b1 = color1.B
-        r2 = color2.R
-        g2 = color2.G
-        b2 = color2.B
+        r1 = color1.Red
+        g1 = color1.Green
+        b1 = color1.Blue
+        r2 = color2.Red
+        g2 = color2.Green
+        b2 = color2.Blue
 
         r_diff = (r2 - r1) // 8
         g_diff = (g2 - g1) // 8
